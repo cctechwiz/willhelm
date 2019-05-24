@@ -44,27 +44,19 @@ install:
   - npm install
 
 script:
-  - echo "Linting"
   - ng lint
 
-  - echo "Unit Tests"
   - npm run test
 
-  - echo "E2E Tests"
   - npm run e2e
 
-  - echo "Building Dev"
   - if [[ "$TRAVIS_BRANCH" == "develop" ]]; then npm run build:dev; fi
 
-  - echo "Building Prod"
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run build:prod; fi
 
-    #- echo "Deploying Linux"
-    #- if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux; fi
 
-  - echo "Deploying Windows"
   - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "windows" ]]; then npm run electron:windows; fi
 
-    #- echo "Deploying Mac"
-    #- if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac; fi
 
