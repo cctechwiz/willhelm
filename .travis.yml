@@ -1,13 +1,13 @@
 language: node_js
 node_js: "10"
 
-osx_image: xcode10.2
+#osx_image: xcode10.2
 dist: xenial
 sudo: required
 
 os:
   - linux
-  - osx
+    #- osx
 
 services:
   - xvfb
@@ -26,11 +26,11 @@ env:
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 before_cache:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm -rf $HOME/.cache/electron-builder/wine; fi
+  - rm -rf $HOME/.cache/electron-builder/wine
 
 cache:
   directories:
-    - ./node_modules
+    - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
     - $HOME/.cache/_prebuilds
@@ -49,12 +49,9 @@ script:
 
   - npm run e2e
 
-  - if [[ "$TRAVIS_BRANCH" == "develop" ]]; then npm run build:dev; fi
+  - npm run build:dev
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run build:prod; fi
 
-#  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux; fi
-#  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:windows; fi
-#  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac; fi
-  - if [[ "$TRAVIS_BRANCH" == "develop" ]] && [[ "TRAVIS_OS_NAME" == "linux" ]]; then npm run electron:linux; fi
-  - if [[ "$TRAVIS_BRANCH" == "develop" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:windows; fi
-  - if [[ "$TRAVIS_BRANCH" == "develop" ]] && [[ "TRAVIS_OS_NAME" == "osx" ]]; then npm run electron:mac; fi
+  - npm run electron:linux
+  - npm run electron:windows
+  - npm run electron:mac
